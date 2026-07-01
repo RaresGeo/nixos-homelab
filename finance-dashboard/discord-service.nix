@@ -1,25 +1,23 @@
-{ config, pkgs, ... }:
-{
-  systemd.services."finance-discord" = {
-    description = "Finance Dashboard Discord Service (data getter)";
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
+{ config, ... }:
 
-    serviceConfig = {
-      User = "daniel";
-      Group = "users";
-      Environment = "XDG_RUNTIME_DIR=/run/user/1000";
-      ExecStartPre = "-${pkgs.podman}/bin/podman rm -f finance-discord";
-      ExecStart = ''
-        ${pkgs.podman}/bin/podman run --name finance-discord --rm \
-          -v /home/daniel/finance-bot/data:/data \
-          --env-file /home/daniel/finance-bot/.env \
-          -e DB_PATH=/data/finance.db \
-          localhost/finance-discord:latest
-      '';
-      ExecStop = "${pkgs.podman}/bin/podman stop finance-discord";
-      Restart = "on-failure";
-      RestartSec = 10;
+let
+  cfg = config.services.finance;
+in
+{
+  virtualisation.oci-containers.containers.finance-discord = {
+    image = cfg.discordImage;
+    autoStart = true;
+
+    volumes = [
+      "${cfg.dataDir}:/data"
+    ];
+    environmentFiles = [ cfg.environmentFile ];
+    environment = {
+      DB_PATH = "/data/finance.db";
+    };
+
+    labels = {
+      "io.containers.autoupdate" = "registry";
     };
   };
 }

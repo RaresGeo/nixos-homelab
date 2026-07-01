@@ -6,10 +6,7 @@
 
     ./fileserver
 
-    ./finance-dashboard/backend.nix
-    ./finance-dashboard/discord-service.nix
-    ./finance-dashboard/sudoers-rules.nix
-    ./finance-dashboard/virtualhost.nix
+    ./finance-dashboard
 
     ./media
 
