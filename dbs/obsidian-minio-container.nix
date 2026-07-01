@@ -1,18 +1,17 @@
 { config, lib, pkgs, ... }:
 
 let
-  minioImage = "quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z";
-  dataDir = "/var/lib/minio/data";
+  cfg = config.services.obsidian-db;
 in
 {
   virtualisation.oci-containers.containers."minio" = {
-    image = minioImage;
+    image = cfg.minioImage;
     environment = {
-      MINIO_ROOT_USER = "obsidian";
-      MINIO_ROOT_PASSWORD = "%Queen7581Pawn%";
+      MINIO_ROOT_USER = cfg.rootUser;
+      MINIO_ROOT_PASSWORD = cfg.rootPassword;
     };
     volumes = [
-      "${dataDir}:/data"
+      "${cfg.dataDir}:/data"
     ];
     ports = [
       "9000:9000"  # API
@@ -24,7 +23,7 @@ in
 
   # Persistent storage
   systemd.tmpfiles.rules = [
-    "d ${dataDir} 0750 minio minio - -"
+    "d ${cfg.dataDir} 0750 minio minio - -"
   ];
 
   users.users.minio = {

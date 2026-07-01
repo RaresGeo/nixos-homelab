@@ -1,16 +1,17 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 
 let
-	media = config.media.users;
+  cfg = config.services.media;
 in
 {
-  imports = [ ./media.nix ];  
+  systemd.tmpfiles.rules = [
+    "d /var/lib/bazarr 0775 ${cfg.users.primary} ${cfg.users.group} - -"
+  ];
 
   services.bazarr = {
     enable = true;
-    user = media.primary;
-    group = media.group;
-    dataDir = "/var/lib/bazarr";  
+    user = cfg.users.primary;
+    group = cfg.users.group;
+    dataDir = "/var/lib/bazarr";
   };
 }
-

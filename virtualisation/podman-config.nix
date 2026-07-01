@@ -15,6 +15,4 @@
   environment.systemPackages = with pkgs; [
     podman-compose  # docker-compose compat
   ];
-
-  virtualisation.oci-containers.backend = "podman";
 }

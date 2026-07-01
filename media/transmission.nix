@@ -1,32 +1,39 @@
-{config, ...}:
+{ config, ... }:
 
 let
-	media = config.media.users;
+  cfg = config.services.media;
 in
 {
-  imports = [ ./media.nix ];
+  users.groups.${cfg.users.group} = {
+    members = [ "transmission" ];
+  };
+
+  systemd.tmpfiles.rules = [
+    "d ${cfg.mediaDir}/downloads 0775 ${cfg.users.primary} ${cfg.users.group} - -"
+    "d ${cfg.mediaDir}/incomplete 0775 ${cfg.users.primary} ${cfg.users.group} - -"
+    "d ${cfg.mediaDir}/watch 0775 ${cfg.users.primary} ${cfg.users.group} - -"
+  ];
 
   services.transmission = {
     enable = true;
-    user = media.primary;
-    group = media.group;
+    user = cfg.users.primary;
+    group = cfg.users.group;
 
     openRPCPort = true;
 
     settings = {
-      download-dir = "/media/downloads";  
-      incomplete-dir = "/media/incomplete";
+      download-dir = "${cfg.mediaDir}/downloads";
+      incomplete-dir = "${cfg.mediaDir}/incomplete";
       incomplete-dir-enabled = true;
-      watch-dir = "/media/watch";  
+      watch-dir = "${cfg.mediaDir}/watch";
 
       rpc-bind-address = "0.0.0.0";
       rpc-port = 9091;
-      rpc-whitelist-enabled = false; 
+      rpc-whitelist-enabled = false;
       rpc-whitelist = "127.0.0.1,192.168.100.50,nixos.local,nixos.*.ts.net";
       rpc-authentication-required = true;
       rpc-username = "daniel";
-      rpc-password = "REDACTED";
+      rpc-password = cfg.transmission.password;
     };
   };
 }
-

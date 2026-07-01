@@ -1,6 +1,10 @@
+{ config, ... }:
+let
+  domain = config.services.homelab.domain;
+in
 {
-  services.nginx.virtualHosts."copyparty.kryllix.dedyn.io" = {
-    useACMEHost = "kryllix.dedyn.io";
+  services.nginx.virtualHosts."copyparty.${domain}" = {
+    useACMEHost = domain;
     forceSSL = true;
     locations."/" = {
       proxyPass = "http://127.0.0.1:3923";

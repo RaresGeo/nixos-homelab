@@ -1,8 +1,11 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
-  copypartyImage = "copyparty/ac:1.20.10";
-  dataDir = "/var/lib/copyparty/data";
+  cfg = config.services.fileserver;
+
+  usernames = map (a: a.username) cfg.accounts;
+  accountLines = lib.concatMapStringsSep "\n" (a: "${a.username}: ${a.password}") cfg.accounts;
+
   copypartyConf = pkgs.writeText "copyparty.conf" ''
     [global]
     # p: 3923
@@ -12,12 +15,12 @@ let
     rproxy: -1
 
     [accounts]
-    daniel: athome
+    ${accountLines}
 
     [/]
     /data
     accs:
-      rwdma: daniel
+      rwdma: ${lib.concatStringsSep "," usernames}
   '';
 in
 {
@@ -34,9 +37,9 @@ in
       ExecStart = ''
         ${pkgs.podman}/bin/podman run --name copyparty --rm \
           -v ${copypartyConf}:/cfg/copyparty.conf:ro \
-          -v ${dataDir}:/data \
+          -v ${cfg.dataDir}:/data \
           -p 3923:3923 \
-          ${copypartyImage}
+          ${cfg.image}
       '';
       ExecStop = "${pkgs.podman}/bin/podman stop copyparty";
       Restart = "on-failure";
@@ -45,6 +48,6 @@ in
   };
 
   systemd.tmpfiles.rules = [
-    "d ${dataDir} 0750 daniel users - -"
+    "d ${cfg.dataDir} 0750 daniel users - -"
   ];
 }

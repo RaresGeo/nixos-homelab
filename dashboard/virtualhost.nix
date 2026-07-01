@@ -1,7 +1,11 @@
+{ config, ... }:
+let
+  domain = config.services.homelab.domain;
+in
 {
-  services.nginx.virtualHosts."kryllix.dedyn.io" = {
+  services.nginx.virtualHosts."${domain}" = {
     default = true;
-    useACMEHost = "kryllix.dedyn.io";
+    useACMEHost = domain;
     forceSSL = true;
     locations."/" = {
       root = "/var/www/dashboard";

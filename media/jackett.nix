@@ -1,17 +1,19 @@
 { config, ... }:
 
 let
-	media = config.media.users;
+  cfg = config.services.media;
 in
 {
-  imports = [ ./media.nix ];
+  systemd.tmpfiles.rules = [
+    "d /var/lib/jackett 0775 ${cfg.users.primary} ${cfg.users.group} - -"
+    "d /var/lib/jackett/.config 0775 ${cfg.users.primary} ${cfg.users.group} - -"
+    "d /var/lib/jackett/.config/Jackett 0775 ${cfg.users.primary} ${cfg.users.group} - -"
+  ];
 
   services.jackett = {
     enable = true;
-    user = media.primary;
-    group = media.group;
+    user = cfg.users.primary;
+    group = cfg.users.group;
     dataDir = "/var/lib/jackett";
   };
-
 }
-

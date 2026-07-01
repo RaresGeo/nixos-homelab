@@ -1,15 +1,19 @@
-{config, ...}:
+{ config, ... }:
 
 let
-	media = config.media.users;
+  cfg = config.services.media;
 in
 {
-	imports = [ ./media.nix ];
+  systemd.tmpfiles.rules = [
+    "d /var/lib/radarr 0775 ${cfg.users.primary} ${cfg.users.group} - -"
+    "d /var/lib/radarr/.config 0775 ${cfg.users.primary} ${cfg.users.group} - -"
+    "d /var/lib/radarr/.config/Radarr 0775 ${cfg.users.primary} ${cfg.users.group} - -"
+    "z /var/lib/radarr/.config/Radarr 0775 ${cfg.users.primary} ${cfg.users.group} - -"
+  ];
 
-	services.radarr = {
-		enable = true;
-		user = media.primary;
-		group = media.group;
+  services.radarr = {
+    enable = true;
+    user = cfg.users.primary;
+    group = cfg.users.group;
   };
 }
-

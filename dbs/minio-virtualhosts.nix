@@ -1,15 +1,19 @@
+{ config, ... }:
+let
+  domain = config.services.homelab.domain;
+in
 {
   services.nginx.virtualHosts = {
-    "minio.kryllix.dedyn.io" = {
-      useACMEHost = "kryllix.dedyn.io";
+    "minio.${domain}" = {
+      useACMEHost = domain;
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://127.0.0.1:9001";
         proxyWebsockets = true;
       };
     };
-    "minio-api.kryllix.dedyn.io" = {
-      useACMEHost = "kryllix.dedyn.io";
+    "minio-api.${domain}" = {
+      useACMEHost = domain;
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://127.0.0.1:9000";
