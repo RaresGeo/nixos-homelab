@@ -13,5 +13,7 @@
     ./networking
 
     ./virtualisation
+
+    ./self-hosted-projects/laravel-tierlists
   ];
 }

@@ -4,12 +4,9 @@ let
   cfg = config.services.obsidian-db;
 in
 {
-  virtualisation.oci-containers.containers."minio" = {
+  virtualisation.oci-containers.containers.minio = {
     image = cfg.minioImage;
-    environment = {
-      MINIO_ROOT_USER = cfg.rootUser;
-      MINIO_ROOT_PASSWORD = cfg.rootPassword;
-    };
+    environmentFiles = [ cfg.environmentFile ];
     volumes = [
       "${cfg.dataDir}:/data"
     ];

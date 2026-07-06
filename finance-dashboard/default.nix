@@ -7,6 +7,7 @@ in
   imports = [
     ./backend.nix
     ./discord-service.nix
+    ./frontend.nix
     ./virtualhost.nix
   ];
 
@@ -47,10 +48,16 @@ in
       description = "Host port the backend API is published on (localhost only)";
     };
 
-    frontendDir = lib.mkOption {
-      type = lib.types.path;
-      default = "/var/www/finance-frontend/dist";
-      description = "Directory served as the finance dashboard frontend";
+    frontendImage = lib.mkOption {
+      type = lib.types.str;
+      default = "localhost:5000/finance-frontend:latest";
+      description = "Frontend container image, including tag";
+    };
+
+    frontendPort = lib.mkOption {
+      type = lib.types.port;
+      default = 8080;
+      description = "Host port the frontend container is published on (localhost only)";
     };
   };
 }

@@ -10,9 +10,9 @@ in
     forceSSL = true;
     locations = {
       "/" = {
-        alias = "${cfg.frontendDir}/";
-        tryFiles = "$uri $uri/ /index.html";
-        index = "index.html";
+        proxyPass = "http://127.0.0.1:${toString cfg.frontendPort}";
+        recommendedProxySettings = true;
+        proxyWebsockets = true;
       };
       "/api/" = {
         proxyPass = "http://127.0.0.1:${toString cfg.port}/api/";

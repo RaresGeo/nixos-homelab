@@ -25,12 +25,12 @@ in
 
     desecTokenFile = lib.mkOption {
       type = lib.types.path;
-      default = /etc/nixos/secrets/desec-token;
+      default = "/etc/nixos/secrets/desec-token";
     };
 
     basicAuthFile = lib.mkOption {
       type = lib.types.path;
-      default = /etc/nixos/secrets/registry-htpasswd;
+      default = "/etc/nixos/secrets/registry-htpasswd";
     };
   };
 }
