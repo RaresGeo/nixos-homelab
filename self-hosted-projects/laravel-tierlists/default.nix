@@ -8,6 +8,7 @@ in
     ./network.nix
     ./web.nix
     ./php-fpm.nix
+    ./virtualhost.nix
   ];
 
   options.services.laravel-tierlist = {
