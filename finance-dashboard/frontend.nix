@@ -6,6 +6,7 @@ in
 {
   virtualisation.oci-containers.containers.finance-frontend = {
     image = cfg.frontendImage;
+    pull = "newer";
     autoStart = true;
 
     # The image serves the built SPA on port 80 (nginx inside the container);

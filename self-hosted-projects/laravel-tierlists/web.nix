@@ -6,6 +6,7 @@ in
 {
   virtualisation.oci-containers.containers.laravel-tierlist-web = {
     image = cfg.webServerImage;
+    pull = "newer";
     autoStart = true;
 
     volumes = [

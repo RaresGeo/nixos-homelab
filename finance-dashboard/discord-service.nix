@@ -6,6 +6,7 @@ in
 {
   virtualisation.oci-containers.containers.finance-discord = {
     image = cfg.discordImage;
+    pull = "newer";
     autoStart = true;
 
     volumes = [

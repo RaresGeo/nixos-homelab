@@ -6,6 +6,7 @@ in
 {
   virtualisation.oci-containers.containers.laravel-tierlist-php-fpm = {
     image = cfg.phpFpmImage;
+    pull = "newer";
     autoStart = true;
 
     volumes = [

@@ -6,6 +6,7 @@ in
 {
   virtualisation.oci-containers.containers.finance-backend = {
     image = cfg.backendImage;
+    pull = "newer";
     autoStart = true;
 
     volumes = [
