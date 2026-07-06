@@ -11,6 +11,7 @@ in
 
     volumes = [
       "${cfg.dataDir}:/var/www/storage:ro"
+      "${cfg.imagesDir}:/var/www/public/images:ro"
     ];
     environmentFiles = [ cfg.environmentFile ];
     ports = [ "127.0.0.1:${toString cfg.port}:80" ];

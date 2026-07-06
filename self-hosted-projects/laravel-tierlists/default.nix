@@ -23,6 +23,15 @@ in
       default = "/var/lib/laravel-tierlist/data";
     };
 
+    imagesDir = lib.mkOption {
+      type = lib.types.path;
+      default = "/var/lib/laravel-tierlist/images";
+      description = ''
+        Host dir for images, uses uid and guid 33
+        So php-fpm pool workers can actually save/read images
+      '';
+    };
+
     webServerImage = lib.mkOption {
       type = lib.types.str;
       default = "localhost:5000/tierlist-web:latest";
