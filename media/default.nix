@@ -44,6 +44,7 @@ in
       description = "Plex claim token (from https://plex.tv/claim)";
     };
 
+    # Switch to a .env file or password manager, as this password is stored in the NixOS store
     transmission.password = lib.mkOption {
       type = lib.types.str;
       description = "Transmission RPC password";

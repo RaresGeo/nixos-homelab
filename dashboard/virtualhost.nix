@@ -1,6 +1,8 @@
 { config, ... }:
+
 let
   domain = config.services.homelab.domain;
+  cfg = config.services.dashboard;
 in
 {
   services.nginx.virtualHosts."${domain}" = {
@@ -8,9 +10,8 @@ in
     useACMEHost = domain;
     forceSSL = true;
     locations."/" = {
-      root = "/var/www/dashboard";
+      root = cfg.stateDir;
       index = "index.html";
     };
   };
 }
-

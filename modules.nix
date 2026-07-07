@@ -1,6 +1,6 @@
 { ... }: {
   imports = [
-    ./dashboard/virtualhost.nix
+    ./dashboard
 
     ./dbs
 
