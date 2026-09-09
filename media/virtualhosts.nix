@@ -36,6 +36,14 @@ in
         proxyWebsockets = true;
       };
     };
+    "sonarr.${domain}" = {
+      useACMEHost = domain;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8989";
+        proxyWebsockets = true;
+      };
+    };
     "transmission.${domain}" = {
       useACMEHost = domain;
       forceSSL = true;

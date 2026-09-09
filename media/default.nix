@@ -10,6 +10,7 @@ in
     ./jackett.nix
     ./plex.nix
     ./radarr.nix
+    ./sonarr.nix
     ./transmission.nix
     ./virtualhosts.nix
   ];
