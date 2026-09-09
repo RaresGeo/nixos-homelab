@@ -10,6 +10,8 @@ in
 
   systemd.tmpfiles.rules = [
     "d ${cfg.mediaDir}/downloads 0775 ${cfg.users.primary} ${cfg.users.group} - -"
+    "d ${cfg.mediaDir}/downloads/radarr 0775 ${cfg.users.primary} ${cfg.users.group} - -"
+    "d ${cfg.mediaDir}/downloads/sonarr 0775 ${cfg.users.primary} ${cfg.users.group} - -"
     "d ${cfg.mediaDir}/incomplete 0775 ${cfg.users.primary} ${cfg.users.group} - -"
     "d ${cfg.mediaDir}/watch 0775 ${cfg.users.primary} ${cfg.users.group} - -"
   ];
