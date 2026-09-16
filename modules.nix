@@ -14,6 +14,8 @@
 
     ./virtualisation
 
+    ./self-hosted-projects/digital-hub
+
     ./self-hosted-projects/laravel-tierlists
   ];
 }

@@ -12,4 +12,14 @@
       ExecStartPost = "${pkgs.podman}/bin/podman image prune -f";
     };
   };
+
+  # Pull-based deploys: CI pushes images to the registry, this picks them up
+  systemd.timers.podman-auto-update = {
+    description = "Periodically update podman containers to their latest registry images";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "*:0/5";
+      Persistent = true;
+    };
+  };
 }
