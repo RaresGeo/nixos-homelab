@@ -25,6 +25,12 @@ in
           proxyWebsockets = true;
         };
         "/api/" = api;
+        # Google's OAuth callback, unprefixed: the backend checks the path it
+        # receives against GOOGLE_REDIRECT_URL, so they have to be the same
+        "= /auth/callback" = {
+          proxyPass = "http://127.0.0.1:${toString cfg.backendPort}";
+          recommendedProxySettings = true;
+        };
       };
     };
     "${cfg.cmsHost}" = {

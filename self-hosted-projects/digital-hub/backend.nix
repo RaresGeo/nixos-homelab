@@ -15,7 +15,7 @@ in
       KEYDB_HOST = "keydb";
       FRONTEND_URL = "https://${cfg.webHost}";
       CMS_URL = "https://${cfg.cmsHost}";
-      GOOGLE_REDIRECT_URL = "https://${cfg.webHost}/api/auth/callback";
+      GOOGLE_REDIRECT_URL = "https://${cfg.webHost}/auth/callback";
       # Storefront and CMS are sibling subdomains; both need the login cookie
       COOKIE_DOMAIN = config.services.homelab.domain;
     };
