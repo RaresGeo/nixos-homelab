@@ -10,6 +10,7 @@ in
     ./ddclient.nix
     ./nginx.nix
     ./tailscale.nix
+    ./wake-on-lan.nix
   ];
 
   options.services.homelab = {
