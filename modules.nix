@@ -8,6 +8,8 @@
 
     ./finance-dashboard
 
+    ./homerok
+
     ./media
 
     ./networking
